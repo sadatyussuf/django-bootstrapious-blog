@@ -4,16 +4,25 @@ from django.contrib.auth import get_user_model
 
 User = get_user_model()
 class AuthorModel(models.Model):
-    name = models.ForeignKey(User,on_delete=models.CASCADE) 
-    profile = models.ImageField()
+    name = models.OneToOneField(User,on_delete=models.CASCADE) 
+    profile_pic = models.ImageField()
 
+    def __str__(self):
+        return self.name.username
 class CategoryModel(models.Model):
     name = models.CharField(max_length=50)
 
-class BlogModel(models.Model):
-    title = models.CharField(max_length=50)
+    def __str__(self):
+        return self.name
+class PostModel(models.Model):
+    title = models.CharField(max_length=150)
     description = models.TextField()
-    timestamp = models.TimeField(auto_now_add=True)
+    timestamp = models.DateTimeField(auto_now_add=True)
     thumb = models.ImageField()
-    category = models.ForeignKey(CategoryModel, on_delete=models.CASCADE)
-    author = models.OneToOneField(AuthorModel,on_delete=models.CASCADE)
+    comment_count = models.IntegerField(default=0)
+    categories = models.ManyToManyField(CategoryModel)
+    author = models.ForeignKey(AuthorModel,on_delete=models.CASCADE)
+    featured = models.BooleanField(default = False)
+
+    def __str__(self):
+        return self.title
