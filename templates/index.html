@@ -28,7 +28,7 @@
       <div class="container">
         <!-- Post-->
         <div class="row d-flex align-items-stretch">
-          {% if not forloop.first and not forloop.last %}
+          {% if not forloop.first and  not forloop.last %}
           <div class="image col-lg-5"><img src="{{post.thumb.url}}" alt="..."></div>
           {%endif%}
           <div class="text col-lg-7">
@@ -79,18 +79,24 @@
           <p class="text-big">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
         </header>
         <div class="row">
+          {% for r_post in latest%}
           <div class="post col-md-4">
-            <div class="post-thumbnail"><a href="post.html"><img src="{% static 'img/blog-1.jpg' %}" alt="..." class="img-fluid"></a></div>
+            <div class="post-thumbnail"><a href="post.html"><img src="{{r_post.thumb.url}}" alt="..." class="img-fluid"></a></div>
             <div class="post-details">
               <div class="post-meta d-flex justify-content-between">
-                <div class="date">20 May | 2016</div>
-                <div class="category"><a href="#">Business</a></div>
+                <div class="date">
+                  {{r_post.timestamp|date:'d M Y'}}
+                </div>
+                <div class="category">
+                  <a href="#">{{r_post.categories.first}}</a>
+                </div>
               </div><a href="post.html">
-                <h3 class="h4">Ways to remember your important ideas</h3></a>
-              <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore.</p>
+                <h3 class="h4">{{r_post.title}}</h3></a>
+              <p class="text-muted">{{r_post.description|truncatechars:75}}...</p>
             </div>
           </div>
-          <div class="post col-md-4">
+          {% endfor %}
+          <!-- <div class="post col-md-4">
             <div class="post-thumbnail"><a href="post.html"><img src="{% static 'img/blog-2.jpg' %}" alt="..." class="img-fluid"></a></div>
             <div class="post-details">
               <div class="post-meta d-flex justify-content-between">
@@ -100,9 +106,11 @@
                 <h3 class="h4">Diversity in Engineering: Effect on Questions</h3></a>
               <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore.</p>
             </div>
-          </div>
-          <div class="post col-md-4">
-            <div class="post-thumbnail"><a href="post.html"><img src="{% static 'img/blog-3.jpg' %}" alt="..." class="img-fluid"></a></div>
+          </div> -->
+          <!-- <div class="post col-md-4">
+            <div class="post-thumbnail">
+              <a href="post.html"><img src="{% static 'img/blog-3.jpg' %}" alt="..." class="img-fluid"></a>
+            </div>
             <div class="post-details">
               <div class="post-meta d-flex justify-content-between">
                 <div class="date">20 May | 2016</div>
@@ -111,7 +119,7 @@
                 <h3 class="h4">Alberto Savoia Can Teach You About Interior</h3></a>
               <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore.</p>
             </div>
-          </div>
+          </div> -->
         </div>
       </div>
     </section>

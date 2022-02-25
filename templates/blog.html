@@ -9,77 +9,25 @@
           <div class="container">
             <div class="row">
               <!-- post -->
+              {% for post in posts%}
               <div class="post col-xl-6">
-                <div class="post-thumbnail"><a href="post.html"><img src="img/blog-post-1.jpeg" alt="..." class="img-fluid"></a></div>
+                <div class="post-thumbnail"><a href="post.html"><img src="{{post.thumb.url}}" alt="..." class="img-fluid"></a></div>
                 <div class="post-details">
                   <div class="post-meta d-flex justify-content-between">
-                    <div class="date meta-last">20 May | 2016</div>
-                    <div class="category"><a href="#">Business</a></div>
+                    <div class="date meta-last">{{post.timestamp|date:'d M Y'}}</div>
+                    <div class="category"><a href="#">{{post.categories.first}}</a></div>
                   </div><a href="post.html">
-                    <h3 class="h4">Alberto Savoia Can Teach You About Interior</h3></a>
-                  <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore.</p>
+                    <h3 class="h4">{{post.title}}</h3></a>
+                  <p class="text-muted">{{post.description|truncatechars:75}}...</p>
                   <footer class="post-footer d-flex align-items-center"><a href="#" class="author d-flex align-items-center flex-wrap">
-                      <div class="avatar"><img src="img/avatar-3.jpg" alt="..." class="img-fluid"></div>
-                      <div class="title"><span>John Doe</span></div></a>
-                    <div class="date"><i class="icon-clock"></i> 2 months ago</div>
-                    <div class="comments meta-last"><i class="icon-comment"></i>12</div>
+                      <div class="avatar"><img src="{{post.author.profile_pic.url}}" alt="..." class="img-fluid"></div>
+                      <div class="title"><span>{{post.author.name}}</span></div></a>
+                    <div class="date"><i class="icon-clock"></i> {{post.timestamp | timesince}}</div>
+                    <div class="comments meta-last"><i class="icon-comment"></i>{{post.comment_count}}</div>
                   </footer>
                 </div>
               </div>
-              <!-- post             -->
-              <div class="post col-xl-6">
-                <div class="post-thumbnail"><a href="post.html"><img src="img/blog-post-2.jpg" alt="..." class="img-fluid"></a></div>
-                <div class="post-details">
-                  <div class="post-meta d-flex justify-content-between">
-                    <div class="date meta-last">20 May | 2016</div>
-                    <div class="category"><a href="#">Business</a></div>
-                  </div><a href="post.html">
-                    <h3 class="h4">Alberto Savoia Can Teach You About Interior</h3></a>
-                  <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore.</p>
-                  <div class="post-footer d-flex align-items-center"><a href="#" class="author d-flex align-items-center flex-wrap">
-                      <div class="avatar"><img src="img/avatar-2.jpg" alt="..." class="img-fluid"></div>
-                      <div class="title"><span>John Doe</span></div></a>
-                    <div class="date"><i class="icon-clock"></i> 2 months ago</div>
-                    <div class="comments meta-last"><i class="icon-comment"></i>12</div>
-                  </div>
-                </div>
-              </div>
-              <!-- post             -->
-              <div class="post col-xl-6">
-                <div class="post-thumbnail"><a href="post.html"><img src="img/blog-post-3.jpeg" alt="..." class="img-fluid"></a></div>
-                <div class="post-details">
-                  <div class="post-meta d-flex justify-content-between">
-                    <div class="date meta-last">20 May | 2016</div>
-                    <div class="category"><a href="#">Business</a></div>
-                  </div><a href="post.html">
-                    <h3 class="h4">Alberto Savoia Can Teach You About Interior</h3></a>
-                  <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore.</p>
-                  <div class="post-footer d-flex align-items-center"><a href="#" class="author d-flex align-items-center flex-wrap">
-                      <div class="avatar"><img src="img/avatar-3.jpg" alt="..." class="img-fluid"></div>
-                      <div class="title"><span>John Doe</span></div></a>
-                    <div class="date"><i class="icon-clock"></i> 2 months ago</div>
-                    <div class="comments meta-last"><i class="icon-comment"></i>12</div>
-                  </div>
-                </div>
-              </div>
-              <!-- post -->
-              <div class="post col-xl-6">
-                <div class="post-thumbnail"><a href="post.html"><img src="img/blog-post-4.jpeg" alt="..." class="img-fluid"></a></div>
-                <div class="post-details">
-                  <div class="post-meta d-flex justify-content-between">
-                    <div class="date meta-last">20 May | 2016</div>
-                    <div class="category"><a href="#">Business</a></div>
-                  </div><a href="post.html">
-                    <h3 class="h4">Alberto Savoia Can Teach You About Interior</h3></a>
-                  <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore.</p>
-                  <div class="post-footer d-flex align-items-center"><a href="#" class="author d-flex align-items-center flex-wrap">
-                      <div class="avatar"><img src="img/avatar-1.jpg" alt="..." class="img-fluid"></div>
-                      <div class="title"><span>John Doe</span></div></a>
-                    <div class="date"><i class="icon-clock"></i> 2 months ago</div>
-                    <div class="comments meta-last"><i class="icon-comment"></i>12</div>
-                  </div>
-                </div>
-              </div>
+              {% endfor %}
             </div>
             <!-- Pagination -->
             <nav aria-label="Page navigation example">
@@ -111,34 +59,25 @@
             <header>
               <h3 class="h6">Latest Posts</h3>
             </header>
-            <div class="blog-posts"><a href="#">
+            <div class="blog-posts">
+              {% for post in posts%}
+                {% if forloop.counter0 < 3%}
+
+              <a href="#">
                 <div class="item d-flex align-items-center">
-                  <div class="image"><img src="img/small-thumbnail-1.jpg" alt="..." class="img-fluid"></div>
-                  <div class="title"><strong>Alberto Savoia Can Teach You About</strong>
+                  <div class="image"><img src="{{post.thumb.url}}" alt="..." class="img-fluid"></div>
+                  <div class="title"><strong>{{post.title}}</strong>
                     <div class="d-flex align-items-center">
                       <div class="views"><i class="icon-eye"></i> 500</div>
-                      <div class="comments"><i class="icon-comment"></i>12</div>
+                      <div class="comments"><i class="icon-comment"></i>{{post.comment_count}}</div>
                     </div>
                   </div>
-                </div></a><a href="#">
-                <div class="item d-flex align-items-center">
-                  <div class="image"><img src="img/small-thumbnail-2.jpg" alt="..." class="img-fluid"></div>
-                  <div class="title"><strong>Alberto Savoia Can Teach You About</strong>
-                    <div class="d-flex align-items-center">
-                      <div class="views"><i class="icon-eye"></i> 500</div>
-                      <div class="comments"><i class="icon-comment"></i>12</div>
-                    </div>
-                  </div>
-                </div></a><a href="#">
-                <div class="item d-flex align-items-center">
-                  <div class="image"><img src="img/small-thumbnail-3.jpg" alt="..." class="img-fluid"></div>
-                  <div class="title"><strong>Alberto Savoia Can Teach You About</strong>
-                    <div class="d-flex align-items-center">
-                      <div class="views"><i class="icon-eye"></i> 500</div>
-                      <div class="comments"><i class="icon-comment"></i>12</div>
-                    </div>
-                  </div>
-                </div></a></div>
+                </div>
+              </a>
+                
+                {% endif%}
+                {% endfor%}
+            </div>
           </div>
           <!-- Widget [Categories Widget]-->
           <div class="widget categories">
