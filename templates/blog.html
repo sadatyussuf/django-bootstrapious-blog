@@ -30,15 +30,29 @@
               {% endfor %}
             </div>
             <!-- Pagination -->
+            {% if posts.has_other_pages %}
             <nav aria-label="Page navigation example">
               <ul class="pagination pagination-template d-flex justify-content-center">
-                <li class="page-item"><a href="#" class="page-link"> <i class="fa fa-angle-left"></i></a></li>
-                <li class="page-item"><a href="#" class="page-link active">1</a></li>
-                <li class="page-item"><a href="#" class="page-link">2</a></li>
-                <li class="page-item"><a href="#" class="page-link">3</a></li>
-                <li class="page-item"><a href="#" class="page-link"> <i class="fa fa-angle-right"></i></a></li>
+                {% if posts.has_previous %}
+                <li class="page-item"><a href="?page={{ posts.previous_page_number }}" class="page-link"> <i class="fa fa-angle-left"></i></a></li>
+                {% endif %}
+                  {% for i in posts.paginator.page_range %}
+                  {% if posts.number == i %}
+                <li class="page-item">
+                  <a href="#" class="page-link active">{{i}}</a>
+                </li>
+                {%else%}
+                <li class="page-item">
+                  <a href="?page={{ i }}" class="page-link">{{i}}</a>
+                </li>
+                {%endif%}
+                {%endfor%}
+                  {% if posts.has_next %}
+                <li class="page-item"><a href="?page={{ posts.next_page_number }}" class="page-link"> <i class="fa fa-angle-right"></i></a></li>
+                {% endif %}
               </ul>
             </nav>
+            {% endif %}
           </div>
         </main>
         <aside class="col-lg-4">
@@ -60,7 +74,7 @@
               <h3 class="h6">Latest Posts</h3>
             </header>
             <div class="blog-posts">
-              {% for post in posts%}
+              {% for post in latest%}
                 {% if forloop.counter0 < 3%}
 
               <a href="#">
@@ -91,7 +105,7 @@
             <div class="item d-flex justify-content-between"><a href="#">Local</a><span>25</span></div>
           </div>
           <!-- Widget [Tags Cloud Widget]-->
-          <div class="widget tags">       
+          <!-- <div class="widget tags">       
             <header>
               <h3 class="h6">Tags</h3>
             </header>
@@ -102,7 +116,8 @@
               <li class="list-inline-item"><a href="#" class="tag">#Sports</a></li>
               <li class="list-inline-item"><a href="#" class="tag">#Economy</a></li>
             </ul>
-          </div>
+          </div> -->
+
         </aside>
       </div>
     </div>
