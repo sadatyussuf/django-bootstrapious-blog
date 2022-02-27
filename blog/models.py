@@ -20,6 +20,7 @@ class PostModel(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True)
     thumb = models.ImageField()
     comment_count = models.IntegerField(default=0)
+    view_count = models.IntegerField(default=0)
     categories = models.ManyToManyField(CategoryModel)
     author = models.ForeignKey(AuthorModel,on_delete=models.CASCADE)
     featured = models.BooleanField(default = False)
