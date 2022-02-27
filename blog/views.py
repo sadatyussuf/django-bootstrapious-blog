@@ -1,9 +1,13 @@
-from django.http import HttpResponse
+from django.db.models import Count
 from django.shortcuts import render
 from .models import PostModel
 # from django.core.paginator import Paginator, EmptyPage, PageNotInteger
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 # Create your views here.
+
+def get_CategoriesCount():
+    qs = PostModel.objects.values('categories__name').annotate(Count('categories'))
+    return qs
 
 def indexView(request):
     queryset = PostModel.objects.filter(featured= True)
@@ -15,6 +19,8 @@ def indexView(request):
     return render(request,'index.html',context)
 
 def listView(request):
+    categories_count = get_CategoriesCount()
+    print(categories_count)
     post_list = PostModel.objects.all()
     latest_posts = PostModel.objects.order_by('-timestamp')
 
@@ -34,7 +40,8 @@ def listView(request):
     context={
         # 'posts': posts
         'posts': paginator_qs,
-        'latest':latest_posts
+        'latest':latest_posts,
+        'categories_count': categories_count
         }
     return render(request,'blog.html',context)
 
