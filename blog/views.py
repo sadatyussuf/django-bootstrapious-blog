@@ -1,9 +1,20 @@
-from django.db.models import Count
+from django.db.models import Count,Q
 from django.shortcuts import render
 from .models import PostModel
-# from django.core.paginator import Paginator, EmptyPage, PageNotInteger
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 # Create your views here.
+
+def searchResultView(request):
+    posts = PostModel.objects.all()
+    q = request.GET.get('q')
+    qs = posts.filter(
+        Q(title__icontains= q ) |
+        Q(description__icontains= q )
+        ).distinct()
+    context = {'queryset':qs}
+    return render(request,'search_results.html',context)
+
+
 
 def get_CategoriesCount():
     qs = PostModel.objects.values('categories__name').annotate(Count('categories'))
@@ -20,7 +31,6 @@ def indexView(request):
 
 def listView(request):
     categories_count = get_CategoriesCount()
-    print(categories_count)
     post_list = PostModel.objects.all()
     latest_posts = PostModel.objects.order_by('-timestamp')
 
