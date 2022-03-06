@@ -11,12 +11,13 @@
               <!-- post -->
               {% for post in posts%}
               <div class="post col-xl-6">
-                <div class="post-thumbnail"><a href="post.html"><img src="{{post.thumb.url}}" alt="..." class="img-fluid"></a></div>
+                <div class="post-thumbnail"><a href="{{post.get_absolute_url}}"><img src="{{post.thumb.url}}" alt="..." class="img-fluid"></a></div>
                 <div class="post-details">
                   <div class="post-meta d-flex justify-content-between">
                     <div class="date meta-last">{{post.timestamp|date:'d M Y'}}</div>
                     <div class="category"><a href="#">{{post.categories.first}}</a></div>
-                  </div><a href="post.html">
+                  </div>
+                  <a href="{{post.get_absolute_url}}">
                     <h3 class="h4">{{post.title}}</h3></a>
                   <p class="text-muted">{{post.description|truncatechars:75}}...</p>
                   <footer class="post-footer d-flex align-items-center"><a href="#" class="author d-flex align-items-center flex-wrap">
@@ -77,7 +78,7 @@
               {% for post in latest%}
                 {% if forloop.counter0 < 3%}
 
-              <a href="#">
+              <a href="{{post.get_absolute_url}}">
                 <div class="item d-flex align-items-center">
                   <div class="image"><img src="{{post.thumb.url}}" alt="..." class="img-fluid"></div>
                   <div class="title"><strong>{{post.title}}</strong>

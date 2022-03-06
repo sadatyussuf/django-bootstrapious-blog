@@ -1,4 +1,4 @@
-from pydoc import describe
+from django.urls import reverse
 from django.db import models
 from django.contrib.auth import get_user_model
 
@@ -24,6 +24,11 @@ class PostModel(models.Model):
     categories = models.ManyToManyField(CategoryModel)
     author = models.ForeignKey(AuthorModel,on_delete=models.CASCADE)
     featured = models.BooleanField(default = False)
+
+    def get_absolute_url(self):
+        return reverse('post-detail',kwargs={'id':self.id})
+
+ 
 
     def __str__(self):
         return self.title

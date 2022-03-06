@@ -14,8 +14,6 @@ def searchResultView(request):
     context = {'queryset':qs}
     return render(request,'search_results.html',context)
 
-
-
 def get_CategoriesCount():
     qs = PostModel.objects.values('categories__name').annotate(Count('categories'))
     return qs
@@ -55,4 +53,5 @@ def listView(request):
         }
     return render(request,'blog.html',context)
 
-
+def detailView(request,id):
+    return render(request,'post.html')
