@@ -1,6 +1,8 @@
 from django.urls import reverse
 from django.db import models
 from django.contrib.auth import get_user_model
+from tinymce import HTMLField
+
 
 User = get_user_model()
 class AuthorModel(models.Model):
@@ -17,6 +19,7 @@ class CategoryModel(models.Model):
 class PostModel(models.Model):
     title = models.CharField(max_length=150)
     description = models.TextField()
+    content = HTMLField('Content')
     timestamp = models.DateTimeField(auto_now_add=True)
     thumb = models.ImageField()
     comment_count = models.IntegerField(default=0)
@@ -24,6 +27,7 @@ class PostModel(models.Model):
     categories = models.ManyToManyField(CategoryModel)
     author = models.ForeignKey(AuthorModel,on_delete=models.CASCADE)
     featured = models.BooleanField(default = False)
+
 
     def get_absolute_url(self):
         return reverse('post-detail',kwargs={'id':self.id})
