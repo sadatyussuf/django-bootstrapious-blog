@@ -53,8 +53,16 @@ def listView(request):
         }
     return render(request,'blog.html',context)
 
+
 def detailView(request,id):
     post = get_object_or_404(PostModel,id=id)
-    context = {'post':post}
+    categories_count = get_CategoriesCount()
+    latest_posts = PostModel.objects.order_by('-timestamp')
+
+    context = {
+        'post':post,
+        'latest':latest_posts,
+        'categories_count': categories_count
+        }
     return render(request,'post.html',context)
 
