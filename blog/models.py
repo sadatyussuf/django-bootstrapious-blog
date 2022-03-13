@@ -27,12 +27,13 @@ class PostModel(models.Model):
     categories = models.ManyToManyField(CategoryModel)
     author = models.ForeignKey(AuthorModel,on_delete=models.CASCADE)
     featured = models.BooleanField(default = False)
+    _previous = models.ForeignKey('self', related_name = 'previous_post' , on_delete = models.SET_NULL, null = True,blank= True)
+    _next = models.ForeignKey('self', related_name = 'next_post' , on_delete = models.SET_NULL, null = True,blank= True)
 
 
     def get_absolute_url(self):
         return reverse('post-detail',kwargs={'id':self.id})
 
- 
 
     def __str__(self):
         return self.title

@@ -1,5 +1,5 @@
 from django.db.models import Count,Q
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from .models import PostModel
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 # Create your views here.
@@ -54,4 +54,7 @@ def listView(request):
     return render(request,'blog.html',context)
 
 def detailView(request,id):
-    return render(request,'post.html')
+    post = get_object_or_404(PostModel,id=id)
+    context = {'post':post}
+    return render(request,'post.html',context)
+
