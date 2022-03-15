@@ -44,10 +44,13 @@ class PostModel(models.Model):
         return self.title
 
 class CommentModel(models.Model):
-    name = models.OneToOneField(User,on_delete=models.CASCADE) 
+    name = models.ForeignKey(User,on_delete=models.CASCADE) 
     timestamp = models.DateTimeField(auto_now_add=True)
     desc = models.TextField()
     post = models.ForeignKey(PostModel, related_name='comments', on_delete=models.CASCADE)
+
+    class Meta:
+        ordering = ('-timestamp',)
 
     def __str__(self):
         return self.name.username

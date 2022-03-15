@@ -63,7 +63,8 @@ def detailView(request,id):
     form = CommentForm(request.POST or None)
     if request.method == 'POST':
         if form.is_valid():
-            form.instance.user = request.user
+            form.save(commit=False)
+            form.instance.name  = request.user
             form.instance.post = post
             form.save()
     context = {
