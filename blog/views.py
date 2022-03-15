@@ -1,5 +1,7 @@
 from django.db.models import Count,Q
 from django.shortcuts import render, get_object_or_404
+
+from blog.forms import CommentForm
 from .models import PostModel
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 # Create your views here.
@@ -58,11 +60,17 @@ def detailView(request,id):
     post = get_object_or_404(PostModel,id=id)
     categories_count = get_CategoriesCount()
     latest_posts = PostModel.objects.order_by('-timestamp')
-
+    form = CommentForm(request.POST or None)
+    if request.method == 'POST':
+        if form.is_valid():
+            form.instance.user = request.user
+            form.instance.post = post
+            form.save()
     context = {
         'post':post,
         'latest':latest_posts,
-        'categories_count': categories_count
+        'categories_count': categories_count,
+        'form':form
         }
     return render(request,'post.html',context)
 

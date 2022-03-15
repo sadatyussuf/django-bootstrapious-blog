@@ -16,6 +16,8 @@ class CategoryModel(models.Model):
 
     def __str__(self):
         return self.name
+
+
 class PostModel(models.Model):
     title = models.CharField(max_length=150)
     description = models.TextField()
@@ -29,11 +31,23 @@ class PostModel(models.Model):
     featured = models.BooleanField(default = False)
     pm_previous = models.ForeignKey('self', related_name = 'previous_post' , on_delete = models.SET_NULL, null = True,blank= True)
     pm_next = models.ForeignKey('self', related_name = 'next_post' , on_delete = models.SET_NULL, null = True,blank= True)
+    
 
 
     def get_absolute_url(self):
         return reverse('post-detail',kwargs={'id':self.id})
-
+    
+    def comments(self):
+        return self.comments.all()
 
     def __str__(self):
         return self.title
+
+class CommentModel(models.Model):
+    name = models.OneToOneField(User,on_delete=models.CASCADE) 
+    timestamp = models.DateTimeField(auto_now_add=True)
+    desc = models.TextField()
+    post = models.ForeignKey(PostModel, related_name='comments', on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.name.username
