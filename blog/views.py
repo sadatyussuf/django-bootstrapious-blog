@@ -1,6 +1,6 @@
 from django.db.models import Count,Q
-from django.shortcuts import render, get_object_or_404
-
+from django.shortcuts import render, get_object_or_404, redirect
+from django.urls import reverse
 from blog.forms import CommentForm
 from .models import PostModel
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
@@ -67,6 +67,10 @@ def detailView(request,id):
             form.instance.name  = request.user
             form.instance.post = post
             form.save()
+
+            return redirect(reverse(
+                'post-detail',kwargs={'id':id}
+                ))
     context = {
         'post':post,
         'latest':latest_posts,
