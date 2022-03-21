@@ -1,10 +1,23 @@
 from django.db.models import Count,Q
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
-from blog.forms import CommentForm
-from .models import PostModel
+from .forms import CommentForm,PostForm
+from .models import PostModel,AuthorModel
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-# Create your views here.
+
+# Create your views here
+
+def get_Author(user): 
+    queryset = AuthorModel.objects.filter(name = user)
+    if queryset.exists():
+        return queryset[0]
+        # print('********************************************************************************************')
+        # print(user)
+        # print(queryset[0])
+        # print('********************************************************************************************')
+    return None
+
+    return queryset
 
 def searchResultView(request):
     posts = PostModel.objects.all()
@@ -55,7 +68,6 @@ def listView(request):
         }
     return render(request,'blog.html',context)
 
-
 def detailView(request,id):
     post = get_object_or_404(PostModel,id=id)
     categories_count = get_CategoriesCount()
@@ -79,3 +91,15 @@ def detailView(request,id):
         }
     return render(request,'post.html',context)
 
+def createView(request):
+    form = PostForm(request.POST or None, request.FILES or None)
+    User = get_Author(request.user)
+    if request.method == 'POST':
+        if form.is_valid():
+            form.save(commit=False)
+            form.instance.author  = User
+            form.save()
+            return redirect('blog')
+
+    context = {'form':form}
+    return render(request, 'post-create.html',context)

@@ -18,7 +18,7 @@ class PostForm(forms.ModelForm):
     class Meta:
         model = PostModel
         # fields = ('content', )
-        fields = '__all__'
+        fields = ('title','description','content','thumb','categories','featured','pm_previous','pm_next',)
 class CommentForm(forms.ModelForm):
     desc = forms.CharField(
         widget=forms.Textarea(

@@ -25,8 +25,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+
     'tinymce',
     'blog',
+
+
+    'crispy_forms'
 ]
 
 MIDDLEWARE = [
@@ -124,8 +129,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 TINYMCE_DEFAULT_CONFIG = {
-    'height': 360,
-    'width': 1120,
+   
     'cleanup_on_startup': True,
     'custom_undo_redo_levels': 20,
     'selector': 'textarea',
@@ -151,3 +155,5 @@ TINYMCE_DEFAULT_CONFIG = {
     'menubar': True,
     'statusbar': True,
     }
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
