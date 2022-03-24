@@ -26,14 +26,18 @@
           <!-- Navbar Menu -->
           <div id="navbarcollapse" class="collapse navbar-collapse">
             <ul class="navbar-nav ml-auto">
-              <li class="nav-item"><a href="index.html" class="nav-link ">Home</a>
+              <li class="nav-item"><a href="{% url 'index' %}" class="nav-link ">Home</a>
               </li>
               <li class="nav-item"><a href="{% url 'blog' %}" class="nav-link active ">Blog</a>
               </li>
               <li class="nav-item"><a href="#" class="nav-link ">Contact</a>
               </li>
+              {% if request.user.is_staff %}
+              <li class="nav-item"><a href="{% url 'post-create' %}" class="nav-link btn btn-light">Create Post</a>
+              </li>
+              {% endif %}
             </ul>
-            <div class="navbar-text"><a href="#" class="search-btn"><i class="icon-search-1"></i></a></div>
+            <!-- <div class="navbar-text"><a href="#" class="search-btn"><i class="icon-search-1"></i></a></div> -->
           </div>
         </div>
       </nav>

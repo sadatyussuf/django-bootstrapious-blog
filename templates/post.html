@@ -25,12 +25,13 @@
                     {% endfor %}
                   </div>
 
+                  {% if post.author.name == request.user %}
                   <div>
                     <!-- <a href="{% url 'post-update' id=post.id %}" class="btn btn-secondary"> Update </a> -->
                     <a href="{{post.get_update_url}}" class="btn btn-secondary"> Update </a>
-                    
                     <a href="{{post.get_delete_url}}" class="btn btn-secondary"> Delete </a>
                   </div>
+                  {% endif %}
                 </div>
                 <h1>{{post.title}}<a href="#"><i class="fa fa-bookmark-o"></i></a></h1>
                 <div class="post-footer d-flex align-items-center flex-column flex-sm-row"><a href="#" class="author d-flex align-items-center flex-wrap">
@@ -92,6 +93,7 @@
                   </div>
                   {% endfor %}
                 </div>
+                {% if request.user.is_authenticated %}
                 <div class="add-comment">
                   <header>
                     <h3 class="h6">Leave a reply</h3>
@@ -109,6 +111,9 @@
                     </div>
                   </form>
                 </div>
+                {%else%}
+                <div class ='btn btn-dark'> <a href="#"> Login To Comment</a> </div>
+                {% endif %}
               </div>
             </div>
           </div>
