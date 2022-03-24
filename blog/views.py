@@ -77,9 +77,6 @@ def detailView(request,id):
             return redirect(reverse(
                 'post-detail',kwargs={'id':post.pk}
                 ))
-            # return redirect(reverse(
-            #     'post-detail',kwargs={'id':id}
-            #     ))
     else:
         form = CommentForm()
     context = {
@@ -95,13 +92,10 @@ def createView(request):
     User = get_Author(request.user)
     title = 'Create'
     if request.method == 'POST':
-        print('*************createView is working*******************')
         if form.is_valid():
-            print('**************is_valid check**************************')
             form.save(commit=False)
             form.instance.author  = User
             form.save()
-            # return redirect('blog')
             return redirect(reverse(
                 'post-detail',kwargs={'id':form.instance.id}
                 ))
@@ -127,8 +121,8 @@ def updateView(request,id):
             return redirect(reverse(
                 'post-detail',kwargs={'id':form.instance.id}
                 ))
-    # # else:
-    #     form = PostForm(instance=post)
+    else:
+        form = PostForm(instance=post)
     # redirect('post-update', id=id)
     context = {
         'form':form,
@@ -137,4 +131,6 @@ def updateView(request,id):
     return render(request, 'post-edit.html',context)
 
 def deleteView(request,id):
-    pass
+    post_to_delete = get_object_or_404(PostModel,id=id)
+    post_to_delete.delete()
+    return redirect('blog')
