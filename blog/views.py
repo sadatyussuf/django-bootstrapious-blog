@@ -11,13 +11,7 @@ def get_Author(user):
     queryset = AuthorModel.objects.filter(name = user)
     if queryset.exists():
         return queryset[0]
-        # print('********************************************************************************************')
-        # print(user)
-        # print(queryset[0])
-        # print('********************************************************************************************')
     return None
-
-    return queryset
 
 def searchResultView(request):
     posts = PostModel.objects.all()
@@ -72,8 +66,8 @@ def detailView(request,id):
     post = get_object_or_404(PostModel,id=id)
     categories_count = get_CategoriesCount()
     latest_posts = PostModel.objects.order_by('-timestamp')
-    form = CommentForm(request.POST or None)
     if request.method == 'POST':
+        form = CommentForm(request.POST or None)
         if form.is_valid():
             form.save(commit=False)
             form.instance.name  = request.user
@@ -81,8 +75,13 @@ def detailView(request,id):
             form.save()
 
             return redirect(reverse(
-                'post-detail',kwargs={'id':id}
+                'post-detail',kwargs={'id':post.pk}
                 ))
+            # return redirect(reverse(
+            #     'post-detail',kwargs={'id':id}
+            #     ))
+    else:
+        form = CommentForm()
     context = {
         'post':post,
         'latest':latest_posts,
@@ -94,12 +93,48 @@ def detailView(request,id):
 def createView(request):
     form = PostForm(request.POST or None, request.FILES or None)
     User = get_Author(request.user)
+    title = 'Create'
     if request.method == 'POST':
+        print('*************createView is working*******************')
         if form.is_valid():
+            print('**************is_valid check**************************')
             form.save(commit=False)
             form.instance.author  = User
             form.save()
-            return redirect('blog')
+            # return redirect('blog')
+            return redirect(reverse(
+                'post-detail',kwargs={'id':form.instance.id}
+                ))
 
-    context = {'form':form}
+    context = {
+        'form':form,
+        'title': title
+        }
     return render(request, 'post-create.html',context)
+
+def updateView(request,id):
+    post = get_object_or_404(PostModel,id=id)
+    form = PostForm( request.POST or None , request.FILES or None,instance=post)
+    User = get_Author(request.user)
+    title = 'Update'
+    print(request.method)
+    if request.method == 'POST':
+        if form.is_valid():
+            form.save(commit=False)
+            form.instance.author = User
+            form.save()
+        # return redirect('post-update', id=id)
+            return redirect(reverse(
+                'post-detail',kwargs={'id':form.instance.id}
+                ))
+    # # else:
+    #     form = PostForm(instance=post)
+    # redirect('post-update', id=id)
+    context = {
+        'form':form,
+        'title': title
+        }
+    return render(request, 'post-edit.html',context)
+
+def deleteView(request,id):
+    pass

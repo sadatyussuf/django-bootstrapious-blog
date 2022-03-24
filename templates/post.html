@@ -26,8 +26,10 @@
                   </div>
 
                   <div>
-                    <a href="#" class="btn btn-primary"> Update </a>
-                    <a href="#" class="btn btn-primary"> Delete </a>
+                    <!-- <a href="{% url 'post-update' id=post.id %}" class="btn btn-secondary"> Update </a> -->
+                    <a href="{{post.get_update_url}}" class="btn btn-secondary"> Update </a>
+                    
+                    <a href="{{post.get_delete_url}}" class="btn btn-secondary"> Delete </a>
                   </div>
                 </div>
                 <h1>{{post.title}}<a href="#"><i class="fa fa-bookmark-o"></i></a></h1>

@@ -4,11 +4,11 @@
 {% load crispy_forms_tags %}
 {% block content %}
 
-<div class = 'container'>
+<div class='container'>
 
     <h1>{{title}} Blog Post</h1>
 
-    <form action ="." method = "POST" enctype="multipart/form-data">
+    <form action="{{post.get_update_url}}" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {{form | crispy}}
 
@@ -16,5 +16,5 @@
     </form>
 
 </div>
-    
+
 {% endblock content %}
