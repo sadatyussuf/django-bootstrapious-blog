@@ -2,7 +2,7 @@ from django.db.models import Count,Q
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
 from .forms import CommentForm,PostForm
-from .models import PostModel,AuthorModel
+from .models import PostModel,AuthorModel,PostView
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 # Create your views here
@@ -66,6 +66,9 @@ def detailView(request,id):
     post = get_object_or_404(PostModel,id=id)
     categories_count = get_CategoriesCount()
     latest_posts = PostModel.objects.order_by('-timestamp')
+
+    PostView.objects.get_or_create(user=request.user,post=post)
+    
     if request.method == 'POST':
         form = CommentForm(request.POST or None)
         if form.is_valid():

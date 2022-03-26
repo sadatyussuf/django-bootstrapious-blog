@@ -24,8 +24,8 @@ class PostModel(models.Model):
     content = HTMLField('Content')
     timestamp = models.DateTimeField(auto_now_add=True)
     thumb = models.ImageField()
-    comment_count = models.IntegerField(default=0)
-    view_count = models.IntegerField(default=0)
+    # comment_count = models.IntegerField(default=0)
+    # view_count = models.IntegerField(default=0)
     categories = models.ManyToManyField(CategoryModel)
     author = models.ForeignKey(AuthorModel,on_delete=models.CASCADE)
     featured = models.BooleanField(default = False)
@@ -46,6 +46,10 @@ class PostModel(models.Model):
     def comments(self):
         return self.comments.all()
 
+    @property   
+    def view_count(self):
+        return self.viewCount.all()
+
     def __str__(self):
         return self.title
 
@@ -60,3 +64,11 @@ class CommentModel(models.Model):
 
     def __str__(self):
         return self.name.username
+
+
+class PostView(models.Model):
+    user = models.ForeignKey(User,on_delete=models.CASCADE) 
+    post = models.ForeignKey(PostModel, related_name='viewCount', on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.user.username
