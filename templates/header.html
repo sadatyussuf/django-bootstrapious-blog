@@ -30,15 +30,20 @@
               </li>
               <li class="nav-item"><a href="{% url 'blog' %}" class="nav-link active ">Blog</a>
               </li>
-              <li class="nav-item"><a href="#" class="nav-link ">Contact</a>
-              </li>
+              <!-- <li class="nav-item"><a href="#" class="nav-link ">Contact</a>
+              </li> -->
               {% if request.user.is_staff %}
               <li class="nav-item"><a href="{% url 'post-create' %}" class="nav-link btn btn-light">Create Post</a>
+              <li class="nav-item"><a href="{% url 'account_logout' %}" class="nav-link btn btn-danger">Logout</a></li>
               </li>
+              {% else %}
+              <li class="nav-item"><a href="{% url 'account_login' %}" class="nav-link btn btn-light">Login</a>
+              <li class="nav-item"><a href="{% url 'account_signup' %}" class="nav-link btn btn-light">Signup</a>
               {% endif %}
             </ul>
             <!-- <div class="navbar-text"><a href="#" class="search-btn"><i class="icon-search-1"></i></a></div> -->
           </div>
+
         </div>
       </nav>
     </header>

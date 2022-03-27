@@ -66,9 +66,10 @@ def detailView(request,id):
     post = get_object_or_404(PostModel,id=id)
     categories_count = get_CategoriesCount()
     latest_posts = PostModel.objects.order_by('-timestamp')
-
-    PostView.objects.get_or_create(user=request.user,post=post)
     
+    if request.user.is_authenticated:
+        PostView.objects.get_or_create(user=request.user,post=post)
+
     if request.method == 'POST':
         form = CommentForm(request.POST or None)
         if form.is_valid():
