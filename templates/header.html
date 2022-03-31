@@ -34,8 +34,10 @@
               </li> -->
               {% if request.user.is_staff %}
               <li class="nav-item"><a href="{% url 'post-create' %}" class="nav-link btn btn-light">Create Post</a>
-              <li class="nav-item"><a href="{% url 'account_logout' %}" class="nav-link btn btn-danger">Logout</a></li>
               </li>
+                {% endif %}
+                {% if request.user.is_authenticated %}
+              <li class="nav-item"><a href="{% url 'account_logout' %}" class="nav-link btn btn-danger">Logout</a></li>
               {% else %}
               <li class="nav-item"><a href="{% url 'account_login' %}" class="nav-link btn btn-light">Login</a>
               <li class="nav-item"><a href="{% url 'account_signup' %}" class="nav-link btn btn-light">Signup</a>

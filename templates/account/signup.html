@@ -1,22 +1,106 @@
 {% extends "../base.html" %}
 {% load static %}
-
 {% load i18n %}
 
 {% block head_title %}{% trans "Signup" %}{% endblock %}
 
 {% block content %}
+
+<style>
+    .card-body {
+        position: relative;
+        
+    }
+
+    .login-link {
+        position: absolute;
+        bottom: 9px;
+    }
+</style>
+
+<section class="vh-100 bg-image" style='color:rgb(56, 74, 77); background:#19aa8d; font-family:Roboto'>
+    <div class="mask d-flex align-items-center h-100 gradient-custom-3" >
+        <div class="container h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col-12 col-md-9 col-lg-7 col-xl-6">
+                    <div class="card" style="border-radius: 15px;">
+                        <div class="card-body p-5" >
+                            <h2 class="text-uppercase text-center mb-5">Create an account</h2>
+
+                            <!-- <div class="login"> -->
+
+
+
 <h1>{% trans "Sign Up" %}</h1>
 
-<p>{% blocktrans %}Already have an account? Then please <a href="{{ login_url }}">sign in</a>.{% endblocktrans %}</p>
+<p class='text-center text-muted mt-5 mb-0 login-link'>{% blocktrans %}Already have an account? Then please <a href="{{ login_url }}"  class="fw-bold text-body">sign in</a>.{% endblocktrans %}</p>
+
 
 <form class="signup" id="signup_form" method="post" action="{% url 'account_signup' %}">
     {% csrf_token %}
-    {{ form.as_p }}
+    <!-- {{ form.as_p }} -->
+
+
+
+<div class="form-outline mb-4 ">
+    <label class="form-label" for="form3Example1cg">{{form.username.label}}:</label>
+    {{form.username}}
+</div>
+<!-- <div class="form-outline mb-4 ">
+    <label class="form-label" for="form3Example3cg">{{form.email.label}}:</label>
+    {{form.email}}
+</div> -->
+<div class="form-outline mb-4 ">
+    <label class="form-label" for="form3Example4cg">{{form.password1.label}}:</label>
+    {{form.password1}}
+</div>
+<div class="form-outline mb-4 ">
+    <label class="form-label" for="form3Example5cg">{{form.password2.label}}:</label>
+    {{form.password2}}
+</div>
+
+
+
     {% if redirect_field_value %}
     <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
     {% endif %}
-    <button type="submit">{% trans "Sign Up" %} &raquo;</button>
+    <!-- <button type="submit">{% trans "Sign Up" %} &raquo;</button> -->
+
+    <div class="d-flex justify-content-center">
+        <button type="submit" class="btn btn-success btn-block btn-lg gradient-custom-4 text-body">{% trans "Sign Up" %}</button>
+    </div>
 </form>
 
+
+<!-- const eMail = getElement('#id_email').classList.add('form-control', 'form-control-lg') -->
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+
+
+
+<script>
+
+    const getElement = (selector) => {
+        const element = document.querySelector(selector)
+        if (element) return element
+        throw Error(
+            `Please double check your class name, there is no ${selector} class`
+        )
+    }
+
+    const userName = getElement('#id_username').classList.add('form-control', 'form-control-lg')
+    
+    const passWord1 = getElement('#id_password1').classList.add('form-control', 'form-control-lg')
+    const passWord2 = getElement('#id_password2').classList.add('form-control', 'form-control-lg')
+
+
+
+</script>
 {% endblock %}

@@ -78,13 +78,13 @@
                   <div class="comment">
                     <div class="comment-header d-flex justify-content-between">
                       <div class="user d-flex align-items-center">
-                        {%if request.user.is_authenticated %}
+                        {%if request.user.is_authenticated%}
                           <div class="image"><img src="{{comment.post.author.profile_pic.url}}" alt="..." class="img-fluid rounded-circle"></div>
                         {%else%}
                           <div class="image"><img src="{% static 'img/user.svg' %}" alt="..." class="img-fluid rounded-circle"></div>
                         {%endif%}
 
-                        <div class="title"><strong>{{comment.post.author.name}}</strong><span class="date">{{comment.timestamp | timesince}} ago</span></div>
+                        <div class="title"><strong>{{comment.name}}</strong><span class="date">{{comment.timestamp | timesince}} ago</span></div>
                       </div>
                     </div>
                     <div class="comment-body">
